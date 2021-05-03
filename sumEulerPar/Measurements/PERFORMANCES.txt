@@ -1,0 +1,25 @@
+--- Sequential profiling ---
+Program: sumEuler.hs 1 15000
+
+Total time: 94.7s (392 723 events)
+Productivity: 99.7%
+Total heap allocated: 28.8GiB
+Copied during GC: 3.6MiB
+GC time: 0.3s
+
+
+--- Parallel profiling ---
+Program: sumEulerParChunk2.hs 1 15000 2
+Number of cores: 4
+
+Total time: 5.8s (2 625 events)
+Productivity: 100.0%
+Total heap allocated: 2.3MiB
+Copied during GC: 0.4MiB
+
+Sparks created: 3153 by HEC 2
+Sparks converted: 3153 
+- HEC 0: 1038
+- HEC 1: 1071
+- HEC 3: 1044
+Activity: the 4 cores are fully used together from the start to the end of the execution.
