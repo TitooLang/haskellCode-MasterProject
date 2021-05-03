@@ -1,0 +1,31 @@
+Sum of Totients between [1..15000] is 68394315
+       2,444,480 bytes allocated in the heap
+         542,120 bytes copied during GC
+          81,880 bytes maximum residency (1 sample(s))
+          49,192 bytes maximum slop
+               0 MB total memory in use (0 MB lost due to fragmentation)
+
+                                     Tot time (elapsed)  Avg pause  Max pause
+  Gen  0         2 colls,     2 par    0.012s   0.001s     0.0006s    0.0011s
+  Gen  1         1 colls,     0 par    0.000s   0.000s     0.0001s    0.0001s
+
+  Parallel GC work balance: 16.44% (serial 0%, perfect 100%)
+
+  TASKS: 10 (1 bound, 9 peak workers (9 total), using -N4)
+
+  SPARKS: 3153(3153 converted, 0 overflowed, 0 dud, 0 GC'd, 0 fizzled)
+
+  INIT    time    0.005s  (  0.003s elapsed)
+  MUT     time   22.143s  (  5.540s elapsed)
+  GC      time    0.012s  (  0.001s elapsed)
+  EXIT    time    0.001s  (  0.008s elapsed)
+  Total   time   22.162s  (  5.551s elapsed)
+
+  Alloc rate    110,393 bytes per MUT second
+
+  Productivity  99.9% of total user, 99.8% of total elapsed
+
+
+real	0m5.554s
+user	0m22.165s
+sys	0m0.000s

@@ -1,0 +1,27 @@
+Sum of Totients between [1..15000] is 68394315
+  30,895,547,752 bytes allocated in the heap
+       3,726,648 bytes copied during GC
+          52,416 bytes maximum residency (2 sample(s))
+          25,032 bytes maximum slop
+               0 MB total memory in use (0 MB lost due to fragmentation)
+
+                                     Tot time (elapsed)  Avg pause  Max pause
+  Gen  0     29475 colls,     0 par    0.328s   0.315s     0.0000s    0.0004s
+  Gen  1         2 colls,     0 par    0.000s   0.000s     0.0001s    0.0001s
+
+  INIT    time    0.000s  (  0.000s elapsed)
+  MUT     time   96.184s  ( 96.200s elapsed)
+  GC      time    0.328s  (  0.315s elapsed)
+  EXIT    time    0.000s  (  0.000s elapsed)
+  Total   time   96.513s  ( 96.515s elapsed)
+
+  %GC     time       0.0%  (0.0% elapsed)
+
+  Alloc rate    321,212,523 bytes per MUT second
+
+  Productivity  99.7% of total user, 99.7% of total elapsed
+
+
+real	1m36.518s
+user	1m36.215s
+sys	0m0.300s
