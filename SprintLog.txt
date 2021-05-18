@@ -1,0 +1,28 @@
+SPRINTLOG:
+
+-| Before 04/05 |-
+------------------
+Setting up the docker environment.
+Exercises in haskell.
+Exercises in GpH.
+Creation of the GitHub repository.
+Optimisation of the algorithm computing the sum of Euler totient computations in parallel.
+Sequential and parallel profiling, runtine measurements.
+Setting up threadscope.
+
+
+-| From 05/05 to 11/05 |-
+-------------------------
+Familiarization with python scripts to call command line functions and get their results.
+Running the sum of Euler totient programm on MACS Linux servers.
+Beginning of the implementation of the resultant on univariate polynomials 
+by computing the determinant of the Sylvester Matrix.
+
+
+-| From 12/05 to 18/05 |-
+-------------------------
+Creation of this SprintLog file.
+Implementation of the univariate resultant using the determinant of the Sylvester Matrix
+and PLU decomposition.
+Implementation of the univariate resultant using a recursive algorithm and Euclidean division.
+License added to the start of the code.
