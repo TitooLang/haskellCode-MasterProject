@@ -1,0 +1,70 @@
+	Sun May 23 16:52 2021 Time and Allocation Profiling Report  (Final)
+
+	   det_prof +RTS -pT -hC -RTS [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9] [9,8,7,6,5,4,3,2,1,9,8,7,6,5,4,3,2,1,9,8,7,6,5,4,3,2,1]
+
+	total time  =        0.06 secs   (62 ticks @ 1000 us, 1 processor)
+	total alloc =  23,836,016 bytes  (excludes profiling overheads)
+
+COST CENTRE        MODULE          %time %alloc
+
+subtractLists      Main             41.9   47.7
+computeUrec.uj'    Main             37.1   41.8
+main               Main              8.1    0.6
+computeUrec.c      Main              6.5    0.6
+CAF                GHC.Conc.Signal   1.6    0.0
+main.poly1         Main              1.6    1.0
+main.poly2         Main              1.6    1.0
+addZeros           Main              1.6    0.7
+computeUrec.uleft' Main              0.0    5.1
+
+
+                                                                     individual     inherited
+COST CENTRE                MODULE                  no.     entries  %time %alloc   %time %alloc
+
+MAIN                       MAIN                     47           0    0.0    0.0   100.0  100.0
+ main                      Main                     95           0    8.1    0.6    98.4   99.8
+  resultantPoly.d          Main                    131           1    0.0    0.0     0.0    0.0
+  resultantPoly.d'         Main                    130           1    0.0    0.0     0.0    0.0
+  resultantPoly.u          Main                    126           1    0.0    0.0     0.0    0.0
+  resultantPoly            Main                    100           1    0.0    0.0    87.1   97.2
+   resultantPoly.d'        Main                    132           0    0.0    0.0     0.0    0.0
+   diagProd                Main                    127           1    0.0    0.0     0.0    0.1
+    diagProdRec            Main                    128          53    0.0    0.1     0.0    0.1
+   resultantPoly.(...)     Main                    101           1    0.0    0.0    87.1   97.1
+    computeU               Main                    105          52    0.0    0.0    85.5   96.3
+     computeU.mat'         Main                    129          34    0.0    0.0     0.0    0.0
+     computeU.d'           Main                    125          34    0.0    0.0     0.0    0.0
+     computeU.us'          Main                    116          51    0.0    0.0     0.0    0.0
+     computeU.(...)        Main                    114          34    0.0    0.0    85.5   95.6
+      computeUrec          Main                    115        1207    0.0    0.4    85.5   95.6
+       computeUrec.c       Main                    121        1173    6.5    0.6     6.5    0.6
+       computeUrec.uj'     Main                    119        1173   37.1   41.8    79.0   89.5
+        subtractLists      Main                    120       62169   41.9   47.7    41.9   47.7
+       computeUrec.uleft'  Main                    117        1173    0.0    5.1     0.0    5.1
+     computeU.d''          Main                    113          34    0.0    0.0     0.0    0.0
+     computeU.u'           Main                    112          51    0.0    0.0     0.0    0.0
+     computeU.mat          Main                    111          51    0.0    0.0     0.0    0.0
+     computeU.(...)        Main                    109          51    0.0    0.0     0.0    0.6
+      switchPivot          Main                    110          51    0.0    0.0     0.0    0.6
+       switchPivotRec      Main                    124         321    0.0    0.6     0.0    0.6
+    createSylvMatrix       Main                    102           1    0.0    0.0     1.6    0.8
+     createSylvMatrix.mat2 Main                    118           1    0.0    0.0     1.6    0.4
+      polyToRational       Main                    123          28    0.0    0.0     0.0    0.0
+      addZeros             Main                    122          26    1.6    0.4     1.6    0.4
+     createSylvMatrix.n    Main                    108           1    0.0    0.0     0.0    0.0
+     createSylvMatrix.mat1 Main                    104           1    0.0    0.0     0.0    0.4
+      polyToRational       Main                    107          28    0.0    0.0     0.0    0.0
+      addZeros             Main                    106          26    0.0    0.4     0.0    0.4
+     createSylvMatrix.m    Main                    103           1    0.0    0.0     0.0    0.0
+  main.poly2               Main                     98           1    1.6    1.0     1.6    1.0
+  main.poly1               Main                     96           1    1.6    1.0     1.6    1.0
+ CAF                       Main                     93           0    0.0    0.0     0.0    0.0
+  main                     Main                     94           1    0.0    0.0     0.0    0.0
+   main.poly2              Main                     99           0    0.0    0.0     0.0    0.0
+   main.poly1              Main                     97           0    0.0    0.0     0.0    0.0
+ CAF                       GHC.IO.Handle.FD         90           0    0.0    0.1     0.0    0.1
+ CAF                       GHC.Conc.Signal          87           0    1.6    0.0     1.6    0.0
+ CAF                       GHC.IO.Encoding          83           0    0.0    0.0     0.0    0.0
+ CAF                       GHC.Real                 79           0    0.0    0.0     0.0    0.0
+ CAF                       Text.Read.Lex            74           0    0.0    0.0     0.0    0.0
+ CAF                       GHC.IO.Encoding.Iconv    73           0    0.0    0.0     0.0    0.0
