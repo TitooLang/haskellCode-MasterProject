@@ -40,7 +40,7 @@ main = do args <- getArgs
 -- in "Algebra for Symbolic Computation"
 --
 resultant :: [Rational] -> [Rational] -> Rational
-resultant p1 p2 | n > m = (-1)^(m+1) * resultant p2 p1
+resultant p1 p2 | n > m = (-1)^(m*n) * resultant p2 p1
                 | n == 0 = an ^ m
                 | r == [] = 0
                 | otherwise = an^(m-p) * resultant p1 r
@@ -123,7 +123,7 @@ polyMult (x:xs) ys = addp (map (*x) ys) ((polyMult (xs) ys) ++ [0])
 --
 rmEmptyCoef :: [Rational] -> [Rational]
 rmEmptyCoef [] = []
-rmEmptyCoef (x:xs) | (abs x) < 1e-2 = rmEmptyCoef xs
+rmEmptyCoef (x:xs) | x == 0 = rmEmptyCoef xs
                    | otherwise = (x:xs)
 
 
