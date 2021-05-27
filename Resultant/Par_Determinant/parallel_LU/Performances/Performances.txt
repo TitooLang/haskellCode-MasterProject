@@ -1,0 +1,7 @@
+Runtime summary of the computation of the resultant of the polynomials [1..100] and [1..124]
+
+- Sequential Recursive resultant: 0.24s
+
+- Sequential LU resultant: 7.67s
+
+- Parrallel LU resultant: minimum = 4.57s
