@@ -1,5 +1,7 @@
 {- 
- <Sequential implementation of univariate polynomial resultant by computing the determinant of the Sylvester matrix.>
+ <Parallel implementation of univariate polynomial resultant by computing the
+ determinant of the Sylvester matrix using PLU factorization.>
+
     Copyright (C) 2021  Titouan Langevin
 
     This program is free software: you can redistribute it and/or modify
@@ -23,14 +25,17 @@
 
 import System.Environment
 import System.IO
+import Control.Parallel
+import Control.Parallel.Strategies
+import Control.DeepSeq
 
 main = do args <- getArgs
           let 
-            poly1 = read (args!!0) :: [Int] -- first polynomial
-            poly2 = read (args!!1) :: [Int] -- second polynomial
+            poly1 = read (args!!0) :: Int -- first polynomial
+            poly2 = read (args!!1) :: Int -- second polynomial
           hPutStrLn stderr ("Polynomial resultant of " ++ 
                       (show poly1) ++ " and " ++ (show poly2) ++ " is " ++ 
-                       show (resultantPoly poly1 poly2))
+                       show (resultantPoly [1..poly1] [1..poly2]))
 
 
 
@@ -42,12 +47,16 @@ main = do args <- getArgs
 -- Create the Sylvester Matrix from 2 univariate polynomials represented as integer lists
 --
 createSylvMatrix :: [Int] -> [Int] -> [[Rational]]
-createSylvMatrix p1 p2 = mat1 ++ mat2
+createSylvMatrix p1 p2 = mat1 ++ mat2 `using` strat
                      where
                         n = (length p1) - 1
                         m = (length p2) - 1
                         mat1 = (take m [addZeros (polyToRational p) (n+m) i | p <- [p1 | i <- [1..m]], i <- [1..m]])
                         mat2 = (take n [addZeros (polyToRational p) (n+m) i | p <- [p2 | i <- [1..n]], i <- [1..n]])
+                        strat res = do
+                          (rpar `dot` rdeepseq) mat1
+                          (rpar `dot` rdeepseq) mat2
+                          return res
 
 
 -- Add 0 to the input row given the size of the matrix and its row number in the half matrix
@@ -73,12 +82,15 @@ computeU :: [[Rational]] -> Int -> Int -> ([[Rational]],Int)
 computeU [un] _ d = ([un],d)
 computeU (u:us) k d | k >= ((length u - 1)) = ((u:us),d)
                     | (u' !! k) == 0 = computeU (u':us') (k+1) d
-                    | otherwise = (u' : mat', d'') 
+                    | otherwise = (u' : mat', d'') `using` strat  
                     where 
                       (mat, d') = switchPivot (u:us) k
                       u' = head mat
                       us'= tail mat
                       (mat', d'') = (computeUrec [] us' u' k (d*d'))
+                      strat res = do
+                        (rpar `dot` rdeepseq) mat'
+                        return res
 
 
 -- Create 0s under the pivot by Gaussian elimination
