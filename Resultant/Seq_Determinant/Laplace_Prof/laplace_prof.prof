@@ -1,0 +1,53 @@
+	Thu May 27 17:32 2021 Time and Allocation Profiling Report  (Final)
+
+	   laplace_prof +RTS -pT -hC -RTS [1,2,3,4,5,6,7] [1,2,3,4,5,6,7]
+
+	total time  =      286.63 secs   (286634 ticks @ 1000 us, 1 processor)
+	total alloc = 175,914,919,208 bytes  (excludes profiling overheads)
+
+COST CENTRE        MODULE  %time %alloc
+
+removeColumn       Main     34.4   23.3
+removeColumn.(...) Main     28.5   47.2
+detLaplace         Main     11.7    6.0
+detLaplaceRec.k    Main     11.3   18.6
+detLaplaceRec      Main      9.8    4.9
+detLaplaceRec.k.\  Main      3.0    0.0
+
+
+                                                                    individual     inherited
+COST CENTRE               MODULE                  no.     entries  %time %alloc   %time %alloc
+
+MAIN                      MAIN                     45           0    0.0    0.0   100.0  100.0
+ main                     Main                     91           0    0.0    0.0   100.0  100.0
+  detLaplace              Main                     99   104557345   11.7    6.0   100.0  100.0
+   detLaplaceRec.s        Main                    104    24723745    0.0    0.0     0.0    0.0
+   detLaplaceRec          Main                    102   129281089    9.8    4.9    88.3   94.0
+    detLaplaceRec.k       Main                    107   104557344   11.3   18.6    77.2   89.1
+     detLaplaceRec.k.\    Main                    108   344058132    3.0    0.0    65.9   70.4
+      removeColumn        Main                    109   344058132   34.4   23.3    62.9   70.4
+       removeColumn.l1    Main                    113   344058132    0.0    0.0     0.0    0.0
+       removeColumn.l2    Main                    111   344058132    0.0    0.0     0.0    0.0
+       removeColumn.(...) Main                    110   344058132   28.5   47.2    28.5   47.2
+    detLaplaceRec.elem    Main                    106   104557344    0.5    0.0     0.5    0.0
+    detLaplaceRec.s       Main                    105    79833599    0.1    0.0     0.1    0.0
+    detLaplaceRec.col     Main                    103   104557344    0.7    0.0     0.7    0.0
+  createSylvMatrix        Main                     96           1    0.0    0.0     0.0    0.0
+   createSylvMatrix.mat2  Main                    114           1    0.0    0.0     0.0    0.0
+    addZeros              Main                    115           6    0.0    0.0     0.0    0.0
+   createSylvMatrix.n     Main                    112           1    0.0    0.0     0.0    0.0
+   createSylvMatrix.mat1  Main                     98           1    0.0    0.0     0.0    0.0
+    addZeros              Main                    100           6    0.0    0.0     0.0    0.0
+   createSylvMatrix.m     Main                     97           1    0.0    0.0     0.0    0.0
+  main.poly2              Main                     94           1    0.0    0.0     0.0    0.0
+  main.poly1              Main                     92           1    0.0    0.0     0.0    0.0
+ CAF                      Main                     89           0    0.0    0.0     0.0    0.0
+  detLaplace              Main                    101           0    0.0    0.0     0.0    0.0
+  main                    Main                     90           1    0.0    0.0     0.0    0.0
+   main.poly2             Main                     95           0    0.0    0.0     0.0    0.0
+   main.poly1             Main                     93           0    0.0    0.0     0.0    0.0
+ CAF                      GHC.IO.Handle.FD         86           0    0.0    0.0     0.0    0.0
+ CAF                      GHC.Conc.Signal          83           0    0.0    0.0     0.0    0.0
+ CAF                      GHC.IO.Encoding          80           0    0.0    0.0     0.0    0.0
+ CAF                      Text.Read.Lex            72           0    0.0    0.0     0.0    0.0
+ CAF                      GHC.IO.Encoding.Iconv    70           0    0.0    0.0     0.0    0.0

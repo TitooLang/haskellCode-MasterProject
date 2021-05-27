@@ -1,0 +1,58 @@
+	Thu May 27 17:45 2021 Time and Allocation Profiling Report  (Final)
+
+	   recu_prof +RTS -pT -hC -RTS 100 124
+
+	total time  =        0.24 secs   (240 ticks @ 1000 us, 1 processor)
+	total alloc = 132,932,592 bytes  (excludes profiling overheads)
+
+COST CENTRE   MODULE  %time %alloc
+
+polyAddrec.z  Main     50.8   18.6
+polyMult      Main     23.8   18.7
+polyAddrec    Main     15.4   56.0
+euclideRec.r' Main      3.8    1.7
+addp          Main      2.1    4.3
+main          Main      1.2    0.2
+divMonom      Main      1.2    0.3
+
+
+                                                                  individual     inherited
+COST CENTRE             MODULE                  no.     entries  %time %alloc   %time %alloc
+
+MAIN                    MAIN                     47           0    0.0    0.0   100.0  100.0
+ main                   Main                     95           0    1.2    0.2   100.0  100.0
+  resultant             Main                    101          27    0.8    0.2    98.3   99.8
+   resultant.p          Main                    121          13    0.0    0.0     0.0    0.0
+   resultant.an         Main                    120          14    0.0    0.0     0.0    0.0
+   resultant.r          Main                    104          13    0.0    0.0    97.5   99.6
+    remainder           Main                    105          13    0.0    0.0    97.5   99.6
+     euclideRec         Main                    106         124    0.0    0.0    97.5   99.6
+      euclideRec.r'     Main                    109         111    3.8    1.7    96.2   99.3
+       addp             Main                    115         111    0.0    0.2    12.9   10.3
+        polyAddrec      Main                    116        5427    1.7    7.9    12.9   10.1
+         polyAddrec.z   Main                    118        5316   11.2    2.2    11.2    2.2
+         rmEmptyCoef    Main                    117         332    0.0    0.0     0.0    0.0
+       multp            Main                    110         111    0.0    0.1    79.6   87.4
+        polyMult        Main                    111        3260   23.8   18.7    79.6   87.3
+         addp           Main                    112        3149    2.1    4.1    55.8   68.7
+          polyAddrec    Main                    113       76621   13.8   48.1    53.8   64.5
+           polyAddrec.z Main                    119       73472   39.6   16.4    39.6   16.4
+           rmEmptyCoef  Main                    114        3149    0.4    0.0     0.4    0.0
+      euclideRec.c      Main                    107         111    0.0    0.0     1.2    0.3
+       divMonom         Main                    108         111    1.2    0.3     1.2    0.3
+   resultant.m          Main                    103          27    0.0    0.0     0.0    0.0
+   resultant.n          Main                    102          27    0.0    0.0     0.0    0.0
+  polyToRational        Main                    100         226    0.0    0.0     0.0    0.0
+  main.poly2            Main                     98           1    0.0    0.0     0.0    0.0
+  main.poly1            Main                     96           1    0.4    0.0     0.4    0.0
+ CAF                    Main                     93           0    0.0    0.0     0.0    0.0
+  main                  Main                     94           1    0.0    0.0     0.0    0.0
+   main.poly2           Main                     99           0    0.0    0.0     0.0    0.0
+   main.poly1           Main                     97           0    0.0    0.0     0.0    0.0
+ CAF                    GHC.IO.Handle.FD         90           0    0.0    0.0     0.0    0.0
+ CAF                    GHC.Conc.Signal          87           0    0.0    0.0     0.0    0.0
+ CAF                    GHC.IO.Encoding          83           0    0.0    0.0     0.0    0.0
+ CAF                    GHC.Real                 79           0    0.0    0.0     0.0    0.0
+ CAF                    Text.Read.Lex            74           0    0.0    0.0     0.0    0.0
+ CAF                    GHC.IO.Encoding.Iconv    73           0    0.0    0.0     0.0    0.0
+ CAF                    GHC.Show                 70           0    0.0    0.0     0.0    0.0

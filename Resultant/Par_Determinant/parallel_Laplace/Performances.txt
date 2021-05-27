@@ -1,0 +1,5 @@
+Computation of the resultant of [1,2,3,4,5,6,7] and [1,2,3,4,5,6]
+
+Sequential runtime: 4,8s
+
+Parallel runtime: minimum of 1,3s for 13 cores 
