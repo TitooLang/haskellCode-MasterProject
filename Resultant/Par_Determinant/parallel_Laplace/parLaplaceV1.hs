@@ -1,5 +1,5 @@
 {-
- <Sequential implementation of univariate polynomial resultant by computing the determinant 
+ <Parallel implementation of univariate polynomial resultant by computing the determinant 
  of the Sylvester matrix with the Laplace expansion.>
 
     Copyright (C) 2021  Titouan Langevin
@@ -25,6 +25,9 @@
 
 import System.Environment
 import System.IO
+import Control.Parallel
+import Control.Parallel.Strategies
+import Control.DeepSeq
 
 main = do args <- getArgs
           let
@@ -52,13 +55,18 @@ detLaplace (x:xs) = detLaplaceRec 0 (zip x [0..]) xs
 -- 
 detLaplaceRec :: Int -> [(Int,Int)] -> [[Int]] -> Int
 detLaplaceRec tot [] m = tot
-detLaplaceRec tot (x:xs) m = detLaplaceRec (tot + s*elem*(detLaplace k)) xs m
+detLaplaceRec tot (x:xs) m = detLaplaceRec (tot + s*elem*k) xs m `using` strat
                              where
                              elem = fst x
                              col = snd x
                              s = if (rem col 2 == 0) then 1 else -1
                              (l1,l2) = splitAt col m
-                             k = map (\el -> removeColumn col el) m
+                            --k = if (length m > 7) then parMap rdeepseq (\el -> removeColumn col el) m else
+                             k = detLaplace (map (\el -> removeColumn col el) m)
+                             strat res = do
+                               if (length m > 9) then (rpar `dot` rdeepseq) k
+                                 else return res
+                               return res
 
 
 -- Given a matrix without its first row, create a submatrix by removing the column with index c
