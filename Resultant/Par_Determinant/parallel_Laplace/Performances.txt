@@ -1,7 +1,16 @@
 Computation of the resultant of [1,2,3,4,5,6,7] and [1,2,3,4,5,6]
 
-Sequential runtime: 8.02s
-
-Parallel runtime: minimum of 1,59s for 13 cores 
-
+- Sequential runtime: 8.02s
+- Parallel runtime: minimum of 1,59s for 13 cores 
 In comparison, the recursive algorithm takes less than 0.01s
+
+
+Profiling on 4 cores:
+
+- Total time: 5.74s
+- GC time: 0.13s
+- Productibity: 97.6%
+- Total Heap allocated: 9.8 GiB
+- Total number of Sparks: 11
+- Sparks converted: 3 (HEC 0: 2, HEC 1: 1, HEC 2: 0)
+- Sparks GC'd: 8 (HEC 3)
