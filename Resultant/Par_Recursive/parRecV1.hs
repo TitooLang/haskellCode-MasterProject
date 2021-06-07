@@ -1,5 +1,5 @@
 {- 
- <Sequential implementation of univariate polynomial resultant thanks to a recursive 
+ <Parallel implementation of univariate polynomial resultant thanks to a recursive 
  algorithm based on Euclidean division.>
     Copyright (C) 2021  Titouan Langevin
     This program is free software: you can redistribute it and/or modify
