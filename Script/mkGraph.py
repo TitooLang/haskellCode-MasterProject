@@ -118,7 +118,7 @@ def Profile():
 
 
 def plotG(dictio, name, title, ylabel):
-    f = open("perf.txt", "w")
+    f = open("perf"+str(name)+".txt", "w")
     for key, value in dictio.items():
         f.write(key + " " + value + "\n")
     f.close()
@@ -130,7 +130,7 @@ def plotG(dictio, name, title, ylabel):
     'set title "' + title + '"\n' +
     'set xlabel "Cores"\n' +
     'set ylabel "' + ylabel + '"\n' +
-    'plot "perf.txt" using 1:2 with lines\n' +
+    'plot "perf' + str(name) +'.txt" using 1:2 with lines\n' +
     'unset output \n' +
     'quit')
     f.close()
