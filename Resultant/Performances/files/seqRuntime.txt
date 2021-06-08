@@ -1,0 +1,3 @@
+mean runtime for the Rec algorithm: 7.05s
+
+runtime for LU det: 123s
