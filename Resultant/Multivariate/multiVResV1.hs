@@ -1,7 +1,31 @@
+{- 
+ <Sequential implementation of multivariate polynomial resultant thanks to an algorithm 
+ using the Chineses remainder theorem, interpolation and evaluation homomorphism 
+ to reduce the problem over GF(p). 
+ Source: G.E. COLLINS, "The Calculation of Multivariate Polynomial Resultants", 1971.>
+    Copyright (C) 2021  Titouan Langevin
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-}
+
+
+
 import Debug.Trace
 
 data MulPoly = Cons Int | Poly [MulPoly] deriving (Show)
 
+
+-------------------------------------------------------
+-------------------------------------------------------
+---- OPERATIONS ON MULTIVARIATE POLYNOMIALS
 
 -- ADDITION
 --
@@ -62,11 +86,10 @@ multPolyMRec (x:xs) p2 = (multPolyMAux x (Poly p2)) : (multPolyMRec xs (Cons 0 :
 
 
 
-divPoly (Cons a) x = Cons (div a x)
-divPoly (Poly p) x = Poly (map (\el -> divPoly el x) p)
 
--- REMOVE ZEROS
+-- REMOVE NULL COEFFICIENTS
 --
+
 rmZeros :: MulPoly -> MulPoly
 rmZeros (Cons a) = (Cons a)
 rmZeros (Poly p) | zerosOnly p' = Cons 0
@@ -88,10 +111,19 @@ zerosOnly ((Poly x):xs) = False
 
 -- AUXILIARY FUNCTIONS
 --
+
+-- Division by an integer
+divPoly (Cons a) x = Cons (div a x)
+divPoly (Poly p) x = Poly (map (\el -> divPoly el x) p)
+
+
+-- Given a MulPoly, return an array of MulPoly
 elems :: MulPoly -> [MulPoly]
 elems (Cons a) = [Cons a]
 elems (Poly p) = p
 
+
+-- Find the maximum norm of a polynomial
 maxNorm (Poly p) = maximum (map polyNorm p)
 maxNorm (Cons a) = abs a
 
@@ -101,30 +133,32 @@ polyNorm (Poly p) | length p == 0 = 0
                   | otherwise = polyNorm (head p) + polyNorm (Poly (tail p))
 
 
+-- Project a polynomial into GF(m)
 polyMod :: MulPoly -> Int -> MulPoly
 polyMod (Cons a) m = Cons (rem a m)
 polyMod (Poly p) m | length p == 0 = Poly p
                    | otherwise = Poly (map (\el -> polyMod el m) p)
 
 
+-- Find the maximum degree in a variable
 maxDegree :: MulPoly -> Int -> Int
 maxDegree (Cons a) _ = 0
 maxDegree (Poly p) v | v==1 = (length p)-1
                      | otherwise = maximum (map (\el -> maxDegree el (v-1)) p)
 
 
-
+-- Return (x_r - b)
 monomial r b | r == 1 = Poly [Cons (-b), Cons 1]
              | otherwise = Poly[monomial (r-1) b]
 
 
--- Evaluate a variable
+
+-- Evaluate a polynomial in a variable
 --
 evalVariable :: MulPoly -> Int -> Int -> MulPoly
 evalVariable (Cons a) _ _ = Cons a
 evalVariable (Poly p) v x | v == 1 = Poly [evalRec p x 0]
                           | otherwise = Poly (map (\el -> evalVariable el (v-1) x) p)
-
 
 
 evalRec :: [MulPoly] -> Int -> Int -> MulPoly 
@@ -159,7 +193,15 @@ isUnivariate ((Poly p):xs) | length xs == 0 = isUnivariate p
 
 
 
--- CPRES ALGORITHM
+-------------------------------------------------------
+-------------------------------------------------------
+---- CPRES ALGORITHM
+
+
+-- INTERPOLATION
+-- Give the unique polynomial G such that:
+-- G(x_1,...,x_(r-1),b_i) = A(x_1,...,x_(r-1),b_i) for b_i in D(x_r)
+-- G(x_1,...,x_(r-1),b) = C(x_1,...,x_(r-1))
 --
 interpolate polyD b polyA polyC p r = addPoly (divPoly (multPoly (addPoly polyC polyA' p) polyD p) evalDb) polyA p
                                     where 
@@ -168,7 +210,10 @@ interpolate polyD b polyA polyC p r = addPoly (divPoly (multPoly (addPoly polyC 
 
 
 
-
+-- CPRES
+-- Given A and B being polynomials over GF(p) with positive degrees in x_r,
+-- return C(x_1,...,x_(r-1)) the resultant of A and B over GF(p) with respect to x_r
+--
 algoCPRES polyA polyB p r | (length univA == mr+1) && (length univB == nr+1) = (Cons (round (resultant univA univB)), True)
                           | otherwise = algoCpresRec polyA polyB (Cons 0) (Cons 1) 0 p k r
                           where
@@ -194,19 +239,26 @@ algoCpresRec polyA polyB polyC polyD b p k r | b==p = traceShow "b=p" (polyC, Fa
 
 
 
--- PRES ALGORITHM
+-------------------------------------------------------
+-------------------------------------------------------
+---- PRES ALGORITHM
+
+
+-- Garner's algorithm to compute the Chinese remainder
+-- Return C such that C mod Q = B and C mod p = A
 --
-
-
 chineseRem :: Int -> Int -> Int -> Int -> Int
 chineseRem q p b a  = d'*q + b 
                     where
-                        b' = rem b p
+                        b' = if 2*(abs b) > q then traceShow ("B > Q/2") (rem b p) else rem b p
                         q' = rem q p
                         d = rem (div (a-b') q') p
                         d' = if (2*d > p) then d - p else d
 
 
+
+-- Apply the chinese remainder to pairs of corresponding coefficients of two polynomials
+--
 polyChineseRem :: MulPoly -> MulPoly -> Int -> Int -> MulPoly
 polyChineseRem (Cons a) (Cons b) q p = (Cons (chineseRem q p b a))
 polyChineseRem (Poly []) b q p = b
@@ -217,6 +269,9 @@ polyChineseRem (Poly (x:xs)) (Poly (y:ys)) q p = Poly ((polyChineseRem x y q p) 
 
 
 
+-- PRES
+-- Given A(x_1,...,x_r) and B(x_1,...,x_r), return their resultant C(x_1,...,x_(r-1)) with respect to x_r.
+--
 algoPRES polyA polyB primeList = algoPresRec (rmZeros polyA) (rmZeros polyB) (Cons 0) primeList 1 f 
                                 where
                                     m = maxDegree polyA 1
@@ -245,6 +300,7 @@ algoPresRec polyA polyB polyC (p:primes) q f    | length primes == 0 = traceShow
 
 ---------------------------------------------------------------------------------------------------------
 -- PRIMES GENERATION
+-- Source: http://wiki.haskell.org/Prime_numbers
 ----------------------------------------------------------------------------------------------------------
 
 
@@ -302,6 +358,8 @@ rollFrom n = go wheelNums wheel
     m = (n-11) `mod` 210  
     go (x:xs) ws@(w:ws2) | x < m = go xs ws2
                          | True  = (n+x-m, ws)      -- (x >= m)
+
+
 
 ---------------------------------------------------------------------------------------------------------
 -- UNIVARIATE RESULTANT
@@ -448,6 +506,10 @@ highPrimes = take 100 (primesFromTMWE primesTMWE (10^12))
 
 main :: IO ()
 main =  do
-print(algoPRES polynomG polynomH highPrimes)
+print(algoPRES polynomG polynomH highPrimes) 
+-- expected result: Poly [Poly [Cons 0, Poly [Cons 0, Cons 0, Cons 0, Cons 0, Cons 0, Cons 1], Poly [Cons 0, Cons 0, Cons 0, Cons 2], Poly [Cons 0, Cons 1]]]
+
+
+
 --print(algoPRES polynomA polynomB highPrimes)
 --print(algoCPRES polynomA polynomB (last highPrimes) 2)
