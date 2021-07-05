@@ -192,7 +192,32 @@ isUnivariate ((Poly p):xs) | length xs == 0 = isUnivariate p
                            | otherwise = onlyCons ((Poly p):xs)
 
 
+-- Generate a random polynomial
+--
+genRandPoly :: Int -> Int -> [Int] -> [Int] -> MulPoly
+genRandPoly v d (x:xs) (y:ys)   | v == 1 = if newVar then (Poly coefs) else Poly [Cons 1]
+                                | otherwise = if newVar then addPolyM nextVar (Poly [multPolyM c (nextPoly a b) | (c,(a,b)) <- cxyzip]) else Poly [nextPoly xs ys]
+                                where
+                                    lenPoly = mod x (d+2)
+                                    newVar = (mod y 3) == 2
+                                    (x1,x2) = splitAt lenPoly xs
+                                    (y1,y2) = splitAt lenPoly ys
+                                    xy = zip x1 y1
+                                    coefs = [if (mod b 3 < 4) then (Cons a) else (Cons 0) | (a,b) <-  xy]
+                                    (x3,x4) = splitAt nextLen x2
+                                    (y3,y4) = splitAt nextLen y2
+                                    nextLen = (d+2)^(v-1)
+                                    nextVar = Poly [nextPoly x3 y3]
+                                    nextPoly a b = genRandPoly (v-1) d a b
+                                    cxyzip = zip coefs (zip (chunkList nextLen x4) (chunkList nextLen y4))
+                                    
 
+
+chunkList :: Int -> [a] -> [[a]]
+chunkList _ [] = []
+chunkList n xs = x1 : (chunkList n x2)
+                where
+                (x1,x2) = splitAt n xs
 -------------------------------------------------------
 -------------------------------------------------------
 ---- CPRES ALGORITHM
@@ -250,9 +275,9 @@ algoCpresRec polyA polyB polyC polyD b p k r | b==p = traceShow "b=p" (polyC, Fa
 chineseRem :: Int -> Int -> Int -> Int -> Int
 chineseRem q p b a  = d'*q + b 
                     where
-                        b' = if 2*(abs b) > q then traceShow ("B > Q/2") (rem b p) else rem b p
-                        q' = rem q p
-                        d = rem (div (a-b') q') p
+                        b' = if 2*(abs b) > q then traceShow ("B > Q/2") (mod b p) else mod b p
+                        q' = mod q p
+                        d = mod (div (a-b') q') p
                         d' = if (2*d > p) then d - p else d
 
 
@@ -285,7 +310,7 @@ algoPRES polyA polyB primeList = algoPresRec (rmZeros polyA) (rmZeros polyB) (Co
 algoPresRec polyA polyB polyC (p:primes) q f    | length primes == 0 = traceShow ("no more primes") polyD
                                                 | (maxDegree polyA 1 > maxDegree polyA' 1) || (maxDegree polyB 1 > maxDegree polyB' 1) || (cpres == False) || (2*(maxNorm polyC) > q') = 
                                                     algoPresRec polyA polyB polyC primes q' f
-                                                | otherwise = if (q' > f) then polyD else algoPresRec polyA polyB polyD primes q' f
+                                                | otherwise = if (q > f) then polyD else algoPresRec polyA polyB polyD primes q' f
                                                 where
                                                     polyA' = rmZeros (polyMod polyA p)
                                                     polyB' = rmZeros (polyMod polyB p)
