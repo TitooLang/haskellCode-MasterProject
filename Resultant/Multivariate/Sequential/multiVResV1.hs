@@ -19,6 +19,8 @@
 
 
 import Debug.Trace
+import System.Random
+
 
 data MulPoly = Cons Int | Poly [MulPoly] deriving (Show)
 
@@ -194,6 +196,17 @@ isUnivariate ((Poly p):xs) | length xs == 0 = isUnivariate p
 
 -- Generate a random polynomial
 --
+
+{-
+newRandomPoly v d = genRandPoly v d (rdList) (rdNum)
+                    where
+                        g = newStdGen
+                        h = newStdGen
+                        rdList = take 1000000 (randomRs (-1000,1000) g)
+                        rdNum = take 1000000 (randomRs (0,3) h)
+-}
+
+
 genRandPoly :: Int -> Int -> [Int] -> [Int] -> MulPoly
 genRandPoly v d (x:xs) (y:ys)   | v == 1 = if newVar then (Poly coefs) else Poly [Cons 1]
                                 | otherwise = if newVar then addPolyM nextVar (Poly [multPolyM c (nextPoly a b) | (c,(a,b)) <- cxyzip]) else Poly [nextPoly xs ys]
@@ -218,6 +231,11 @@ chunkList _ [] = []
 chunkList n xs = x1 : (chunkList n x2)
                 where
                 (x1,x2) = splitAt n xs
+
+
+intgToIntList [] = []
+intgToIntList (x:xs) = (fromIntegral x) : (intgToIntList xs)
+
 -------------------------------------------------------
 -------------------------------------------------------
 ---- CPRES ALGORITHM
