@@ -580,11 +580,16 @@ polynomH = Poly [Cons 0, Cons 0, Poly [Poly [ Cons 0, Cons 1], Cons 1]]
 
 highPrimes = take 100 (primesFromTMWE primesTMWE (10^12))
 
+randPoly1 = Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Cons 489,Cons 14,Cons 217,Cons (-728),Cons (-487),Cons 571,Cons 514]]]]],Poly [Poly [Poly [Poly [Poly [Cons 164478763,Cons (-94117573),Cons 119914423,Cons 160357275,Cons 609812,Cons 176485,Cons (-530957),Cons (-628587),Cons (-730723),Cons (-211782),Cons 259095],Poly [Cons 44171352214,Cons 39634113618,Cons (-99552352724),Cons (-39634113618),Cons 81670294728,Cons 56048241480,Cons 100886834664,Cons (-45238937766),Cons 121838201122],Poly [Cons 234052154],Poly [Cons (-106817734)]]]],Poly [Poly [Poly [Poly [Cons (-341705)]]]],Poly [Poly [Poly [Poly [Cons 69092]]]]],Poly [Poly [Poly [Poly [Poly [Cons 60]]]]]]]]]]
+
+
+randPoly2 = Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Cons 206,Cons (-681),Cons 906,Cons 446,Cons (-468),Cons 561,Cons 441,Cons 224,Cons 776]],Poly [Poly [Cons 756]],Poly [Poly [Cons (-657)]],Poly [Poly [Cons (-196812),Cons 273492,Cons 529092],Poly [Cons (-28501956)],Poly [Cons 265185],Poly [Cons (-8946)],Poly [Cons (-260712)]],Poly [Poly [Cons (-1416)],Poly [Cons (-2904)],Poly [Cons (-810432),Cons 926744,Cons (-2326240),Cons (-1354472),Cons 427728,Cons 2213680,Cons 592816,Cons 161336,Cons 1665888,Cons 465248,Cons (-435232)],Poly [Cons (-2076)],Poly [Cons 1926920,Cons 1892080,Cons (-1441840),Cons (-402000),Cons (-1444520),Cons (-1688400),Cons (-367160),Cons (-1570480),Cons (-1072000),Cons (-1404320)],Poly [Cons (-1741952)]],Poly [Poly [Cons 681]],Poly [Poly [Cons (-30)]],Poly [Poly [Cons 550]],Poly [Poly [Cons (-609)]],Poly [Poly [Cons (-172)]]]]]]]]]]
+
 
 
 main :: IO ()
 main =  do
-print(algoPRES polynomG polynomH highPrimes) 
+print(algoPRESPar randPoly1 randPoly2 highPrimes) 
 -- expected result: Poly [Poly [Cons 0, Poly [Cons 0, Cons 0, Cons 0, Cons 0, Cons 0, Cons 1], Poly [Cons 0, Cons 0, Cons 0, Cons 2], Poly [Cons 0, Cons 1]]]
 
 
