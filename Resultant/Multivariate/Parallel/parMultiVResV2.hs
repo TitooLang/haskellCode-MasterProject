@@ -19,7 +19,6 @@
 
 
 import Debug.Trace
-import System.Random
 import Control.Parallel
 import Control.Parallel.Strategies
 import Control.DeepSeq
@@ -197,47 +196,6 @@ isUnivariate ((Poly p):xs) | length xs == 0 = isUnivariate p
                            | otherwise = onlyCons ((Poly p):xs)
 
 
--- Generate a random polynomial
---
-
-{-
-newRandomPoly v d = genRandPoly v d (rdList) (rdNum)
-                    where
-                        g = newStdGen
-                        h = newStdGen
-                        rdList = take 1000000 (randomRs (-1000,1000) g)
-                        rdNum = take 1000000 (randomRs (0,3) h)
--}
-
-
-genRandPoly :: Int -> Int -> [Int] -> [Int] -> MulPoly
-genRandPoly v d (x:xs) (y:ys)   | v == 1 = if newVar then (Poly coefs) else Poly [Cons 1]
-                                | otherwise = if newVar then addPolyM nextVar (Poly [multPolyM c (nextPoly a b) | (c,(a,b)) <- cxyzip]) else Poly [nextPoly xs ys]
-                                where
-                                    lenPoly = mod x (d+2)
-                                    newVar = (mod y 3) == 2
-                                    (x1,x2) = splitAt lenPoly xs
-                                    (y1,y2) = splitAt lenPoly ys
-                                    xy = zip x1 y1
-                                    coefs = [if (mod b 3 < 4) then (Cons a) else (Cons 0) | (a,b) <-  xy]
-                                    (x3,x4) = splitAt nextLen x2
-                                    (y3,y4) = splitAt nextLen y2
-                                    nextLen = (d+2)^(v-1)
-                                    nextVar = Poly [nextPoly x3 y3]
-                                    nextPoly a b = genRandPoly (v-1) d a b
-                                    cxyzip = zip coefs (zip (chunkList nextLen x4) (chunkList nextLen y4))
-                                    
-
-
-chunkList :: Int -> [a] -> [[a]]
-chunkList _ [] = []
-chunkList n xs = x1 : (chunkList n x2)
-                where
-                (x1,x2) = splitAt n xs
-
-
-intgToIntList [] = []
-intgToIntList (x:xs) = (fromIntegral x) : (intgToIntList xs)
 
 -------------------------------------------------------
 -------------------------------------------------------
@@ -580,19 +538,12 @@ polynomH = Poly [Cons 0, Cons 0, Poly [Poly [ Cons 0, Cons 1], Cons 1]]
 
 highPrimes = take 100 (primesFromTMWE primesTMWE (10^12))
 
-randPoly1 = Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Cons 125],Poly [Cons (-390)],Poly [Cons 677,Cons 809,Cons (-862),Cons 359,Cons 195,Cons (-764),Cons (-238),Cons 786],Poly [Cons (-452)],Poly [Cons (-191)],Poly [Cons 650],Poly [Cons (-770)]]],Poly [Poly [Poly [Cons 760]]],Poly [Poly [Poly [Cons (-244),Cons (-734),Cons 320,Cons 874,Cons (-192)]],Poly [Poly [Cons (-34)]]],Poly [Poly [Poly [Cons (-768)]]],Poly [Poly [Poly [Cons (-264),Cons 704,Cons 864,Cons (-216)]]],Poly [Poly [Poly [Cons 405],Poly [Cons (-300),Cons 100,Cons 470,Cons (-790),Cons (-650),Cons (-560)],Poly [Cons 800,Cons (-820)],Poly [Cons 420],Poly [Cons 200],Poly [Cons (-450)],Poly [Cons (-30),Cons (-820),Cons 530,Cons 300,Cons 970,Cons (-180),Cons (-300),Cons 650,Cons 470],Poly [Cons (-200)],Poly [Cons 720],Poly [Cons 750]],Poly [Poly [Cons 630]],Poly [Poly [Cons (-560)],Poly [Cons 895],Poly [Cons 80,Cons 250,Cons 970,Cons 830,Cons (-330)],Poly [Cons (-15)]],Poly [Poly [Cons (-715),Cons 640,Cons (-860),Cons (-380),Cons (-755),Cons 135,Cons (-15)]],Poly [Poly [Cons (-295)],Poly [Cons (-10),Cons (-205),Cons (-230),Cons 530,Cons 70,Cons (-725),Cons (-185),Cons 10,Cons (-710),Cons 90,Cons (-580)],Poly [Cons 650],Poly [Cons 65],Poly [Cons 550],Poly [Cons (-250)],Poly [Cons 410],Poly [Cons (-820)],Poly [Cons (-15)],Poly [Cons 945]],Poly [Poly [Cons 935],Poly [Cons (-800)],Poly [Cons 490]],Poly [Poly [Cons (-190)],Poly [Cons (-610)],Poly [Cons (-405)],Poly [Cons 75],Poly [Cons 895]],Poly [Poly [Cons 500,Cons 500]],Poly [Poly [Cons (-330)]],Poly [Poly [Cons 0,Cons 700,Cons 100,Cons (-380),Cons 220,Cons (-600)]]]]]]]]]]
+randPoly1 = Poly [Poly [Poly [Cons 0,Cons 0,Cons 0,Cons 0,Poly [Cons 0,Cons 360,Cons 0,Cons 600]],Poly [Cons 0,Poly [Cons 344,Cons 376,Cons 0,Cons (-648),Cons (-672)],Poly [Cons (-440),Cons 0,Cons 0,Cons (-560),Cons (-240),Cons (-840)],Poly [Cons 320,Cons (-312),Cons 0,Cons 856,Cons (-800),Cons 784],Poly [Cons 224,Cons (-928),Cons 0,Cons 312,Cons 816]],Poly [Cons 0,Cons 0,Poly [Cons 428,Cons 444,Cons 724,Cons 0,Cons 0,Cons (-740)]],Poly [Poly [Cons (-995),Cons (-920),Cons 970,Cons (-955),Cons 0,Cons 515],Poly [Cons 436,Cons (-376),Cons 64],Cons 0,Cons 0,Poly [Cons 0,Cons 832,Cons (-936),Cons (-984),Cons 328,Cons 832]],Poly [Cons 0,Poly [Cons 450,Cons 0,Cons (-210),Cons (-250),Cons (-510)],Poly [Cons 770,Cons 0,Cons 0,Cons 0,Cons 290,Cons 770],Poly [Cons 0,Cons 360,Cons 400,Cons 80,Cons 0,Cons (-240)]]],Cons 0,Poly [Cons 0,Cons 0,Cons 0,Poly [Cons 0,Poly [Cons (-472),Cons (-988),Cons 544,Cons (-720),Cons 0,Cons 720],Poly [Cons (-40),Cons 140,Cons 0,Cons 664]],Poly [Cons 0,Poly [Cons 0,Cons 824,Cons 0,Cons 0,Cons 208,Cons 220]]],Poly [Poly [Poly [Cons (-656),Cons 0,Cons 0,Cons 0,Cons (-952),Cons (-600)],Poly [Cons 0,Cons (-640),Cons 40,Cons (-320),Cons 120],Cons 0,Poly [Cons (-552),Cons 0,Cons (-592),Cons 0,Cons 804,Cons 344],Poly [Cons (-480),Cons 0,Cons (-264),Cons (-872),Cons 932,Cons 560]],Cons 0,Poly [Cons 0,Cons 0,Poly [Cons 0,Cons 0,Cons (-400),Cons (-600),Cons 720],Poly [Cons 704,Cons 944,Cons 0,Cons 0,Cons 0,Cons (-80)]],Cons 0,Cons 0,Poly [Cons 0,Poly [Cons (-830),Cons 918,Cons 306,Cons 730,Cons 0,Cons 210],Cons 0,Poly [Cons (-672),Cons 0,Cons 0,Cons 0,Cons (-658),Cons 596]]],Poly [Poly [Cons 0,Poly [Cons (-264),Cons 0,Cons (-396),Cons 0,Cons 808,Cons (-252)],Poly [Cons (-900),Cons 700,Cons 200,Cons 200,Cons 0,Cons 200]],Poly [Cons 0,Poly [Cons 0,Cons (-130),Cons 0,Cons 80,Cons (-660)],Poly [Cons (-250),Cons 0,Cons 0,Cons 0,Cons (-780),Cons (-600)],Poly [Cons (-360),Cons 600,Cons 0,Cons 0,Cons 120,Cons 80],Poly [Cons 660,Cons (-280),Cons (-760),Cons 240,Cons 0,Cons 260]],Poly [Poly [Cons 0,Cons 0,Cons 0,Cons 0,Cons 0,Cons (-416)],Poly [Cons 0,Cons (-268),Cons 0,Cons (-400)],Cons 0,Cons 0,Poly [Cons 720,Cons 984,Cons 0,Cons 504]],Poly [Poly [Cons 0,Cons 0,Cons 0,Cons 0,Cons 0,Cons 20],Poly [Cons (-960),Cons 80,Cons (-440),Cons 280],Poly [Cons (-860),Cons 360,Cons (-560),Cons 160,Cons (-540)],Poly [Cons 80,Cons (-180),Cons 0,Cons (-140),Cons 0,Cons 120],Poly [Cons 260,Cons 0,Cons 230,Cons (-290)]],Cons 0,Poly [Poly [Cons 0,Cons 800,Cons 750,Cons 0,Cons 800],Cons 0,Cons 0,Poly [Cons 720,Cons 680,Cons 0,Cons (-440),Cons 0,Cons 240]]],Poly [Cons 0,Poly [Poly [Cons 0,Cons 0,Cons 0,Cons (-380),Cons 0,Cons (-860)],Cons 0,Cons 0,Cons 0,Poly [Cons (-400),Cons (-200),Cons (-800),Cons 200,Cons 600]],Cons 0,Poly [Poly [Cons (-280),Cons 920,Cons 0,Cons (-640),Cons (-360),Cons 200],Cons 0,Cons 0,Poly [Cons 0,Cons 385,Cons 0,Cons 425,Cons 0,Cons 870]]]]
 
-
-randPoly2 = Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Poly [Cons 938],Poly [Cons 66],Poly [Cons 438],Poly [Cons (-454)],Poly [Cons (-768)],Poly [Cons 26],Cons 0,Poly [Cons 488],Poly [Cons (-916)],Poly [Cons (-634),Cons 220,Cons (-954)],Poly [Cons (-112)]],Poly [Poly [Cons (-364)]],Poly [Poly [Cons (-20)]],Poly [Poly [Cons (-581),Cons (-451),Cons (-987),Cons (-221),Cons (-717),Cons 542,Cons 419],Poly [Cons 823],Poly [Cons 375],Poly [Cons (-129)],Poly [Cons (-908)]],Poly [Poly [Cons 680,Cons 335,Cons (-285),Cons (-660)]],Poly [Poly [Cons 47]],Poly [Poly [Cons 692]]]],Poly [Poly [Poly [Poly [Cons 200],Poly [Cons 0],Poly [Cons 0]],Poly [Poly [Cons 600]],Poly [Poly [Cons (-400)]],Poly [Poly [Cons 0,Cons (-800),Cons (-800),Cons (-400),Cons 600,Cons (-200),Cons 800,Cons (-400),Cons 0,Cons 800]]],Poly [Poly [Poly [Cons 400,Cons 0,Cons 800,Cons 200,Cons (-400),Cons 0]]],Poly [Poly [Poly [Cons (-600)]]],Poly [Poly [Poly [Cons 400],Poly [Cons (-400),Cons 400,Cons (-400),Cons 800,Cons (-800),Cons 0,Cons (-600)],Poly [Cons (-200)]],Cons 0,Poly [Poly [Cons 600]],Poly [Poly [Cons 0]],Poly [Poly [Cons (-400)]],Poly [Poly [Cons 800]]],Poly [Poly [Poly [Cons 400]]],Poly [Poly [Poly [Cons (-400),Cons 800,Cons 200,Cons (-400),Cons 400,Cons (-800),Cons (-800)]]],Poly [Poly [Poly [Cons 400]]]],Poly [Poly [Poly [Poly [Cons (-397)]]]],Poly [Poly [Poly [Poly [Cons 221,Cons 781,Cons 707,Cons 14,Cons 241,Cons (-225),Cons (-245),Cons 848,Cons 816,Cons 853,Cons 931]]]],Poly [Poly [Poly [Poly [Cons 862,Cons 724,Cons (-588),Cons (-630)]]]],Poly [Poly [Poly [Poly [Cons 160],Poly [Cons 160],Poly [Cons (-160)]]]],Poly [Poly [Poly [Poly [Cons 795]]]]],Poly [Poly [Poly [Poly [Poly [Cons (-944)]]]]],Poly [Poly [Poly [Poly [Poly [Cons (-385)]]]]],Poly [Poly [Poly [Poly [Poly [Cons 454],Poly [Cons (-664)],Poly [Cons 684,Cons (-196)],Poly [Cons (-538)],Poly [Cons (-668),Cons 188,Cons 652,Cons (-640),Cons (-72),Cons 608,Cons (-356)],Poly [Cons 476],Poly [Cons (-418)]]]]]]]]]]
-
+randPoly2 = Poly [Cons 0,Cons 0,Poly [Cons 0,Cons 0,Poly [Poly [Cons 0,Cons 200,Cons (-250),Cons 0,Cons 50,Cons 750],Poly [Cons 0,Cons 0,Cons 0,Cons (-520),Cons (-400),Cons 600],Poly [Cons (-840),Cons 600,Cons 0,Cons 0,Cons 240,Cons (-300)],Poly [Cons 350,Cons 0,Cons 0,Cons 0,Cons 100,Cons (-750)]],Cons 0,Cons 0,Poly [Cons 0,Poly [Cons (-120),Cons 880,Cons 0,Cons 200,Cons 0,Cons 160],Poly [Cons 0,Cons 0,Cons (-250),Cons (-370),Cons (-10),Cons (-720)]]],Poly [Poly [Cons 0,Cons 0,Cons 0,Poly [Cons 208,Cons 0,Cons (-952),Cons 336,Cons 224]],Cons 0,Cons 0,Poly [Cons 0,Poly [Cons 320,Cons (-160),Cons (-560),Cons (-240),Cons (-160)],Cons 0,Cons 0,Poly [Cons (-200),Cons 0,Cons 200,Cons 0,Cons (-120),Cons 240]],Poly [Poly [Cons 0,Cons 0,Cons 440,Cons 968,Cons (-84)],Poly [Cons (-368),Cons (-632),Cons 552,Cons 688,Cons (-848),Cons 384],Cons 0,Poly [Cons 320,Cons 440,Cons 0,Cons 170,Cons (-210)]],Poly [Poly [Cons (-880)],Poly [Cons (-16),Cons 720],Poly [Cons 736,Cons (-200),Cons (-912),Cons 0,Cons (-688)]]],Poly [Poly [Cons 0,Poly [Cons 710,Cons 278,Cons 584,Cons (-844),Cons (-292),Cons (-628)],Poly [Cons 0,Cons 0,Cons 0,Cons 0,Cons 192],Poly [Cons (-320),Cons (-680),Cons 0,Cons 0,Cons (-640)]],Cons 0,Cons 0,Poly [Poly [Cons 0,Cons 600,Cons 0,Cons 0,Cons 650,Cons (-400)],Cons 0,Cons 0,Cons 0,Poly [Cons 0,Cons 0,Cons (-600),Cons 360,Cons (-350),Cons (-550)]],Poly [Poly [Cons 340,Cons 484,Cons 894,Cons (-432),Cons 886],Cons 0,Cons 0,Cons 0,Poly [Cons 0,Cons 0,Cons (-616),Cons 118,Cons 192,Cons 235]],Poly [Poly [Cons 0,Cons 177,Cons (-996),Cons 0,Cons 0,Cons (-602)],Cons 0,Poly [Cons 0,Cons (-894),Cons 0,Cons 722,Cons (-742),Cons 912]]],Poly [Cons 0,Cons 0,Poly [Cons 0,Cons 0,Cons 0,Poly [Cons (-640),Cons 560,Cons 0,Cons (-120),Cons 0,Cons 240]],Poly [Cons 0,Cons 0,Poly [Cons 920,Cons (-304),Cons 0,Cons 184,Cons (-880)],Cons 0,Poly [Cons (-600),Cons 0,Cons 0,Cons 0,Cons (-840)]],Cons 0,Poly [Cons 0,Poly [Cons 210,Cons 820,Cons 0,Cons 0,Cons 180],Poly [Cons 136,Cons 0,Cons 128,Cons 0,Cons 84,Cons 294],Poly [Cons 0,Cons (-562),Cons 0,Cons (-798),Cons 2,Cons (-630)]]]]
 
 
 main :: IO ()
 main =  do
 print(algoPRESPar randPoly1 randPoly2 highPrimes) 
--- expected result: Poly [Poly [Cons 0, Poly [Cons 0, Cons 0, Cons 0, Cons 0, Cons 0, Cons 1], Poly [Cons 0, Cons 0, Cons 0, Cons 2], Poly [Cons 0, Cons 1]]]
 
-
-
---print(algoPRES polynomA polynomB highPrimes)
---print(algoCPRES polynomA polynomB (last highPrimes) 2)
