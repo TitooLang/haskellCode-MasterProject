@@ -28,6 +28,7 @@ addPolyMRec (x:xs) (y:ys) = (addPolyM x y) : (addPolyMRec xs ys)
 
 
 
+
 -- MULTIPLICATION
 --
 
@@ -136,6 +137,18 @@ newRandPoly v d xs ys | v <= 1 = Poly coefs
                         cxyzip = zip coefs (zip (chunkList nextLen x2) (chunkList nextLen y2))
 
 
+randomList :: Int -> IO([Int])
+randomList 0 = return []
+randomList n = do
+  r  <- randomRIO (-1000,1000)
+  rs <- randomList (n-1)
+  return (r:rs)
+
+
+randPoly v d xs ys = rmZeros (polyMod (newRandPoly v d (intgToIntList xs) (intgToIntList ys)) 1000)
+
+
+
 {-
 rd1 = [1..1000000000]
 rd2 = [2 | i<- rd1]
@@ -145,8 +158,13 @@ rdPoly = rmZeros (polyMod (newRandPoly 6 3 rd1 rd1) 1000)
 
 main :: IO ()
 main =  do
-	g <- newStdGen
-	h <- newStdGen
-    rdList <- take 1000000 (randomRs (-1000,1000) g)
-    rdNum <- take 1000000 (randomRs (0,3) h)
-    print(rmZeros (polyMod (newRandPoly 10 10 (intgToIntList rdList) (intgToIntList rdNum)) 1000))
+       rd1 <- randomList 1000000
+       rd2 <- randomList 1000000
+       let rdpoly = (randPoly 7 4 rd1 rd2)
+       print(rdpoly)
+     --  g <- newStdGen
+     --  h <- newStdGen
+ --      let rdList = (take 1000000 (randomRs (-1000,1000) g)) :: [Random Int]
+   --    let rdNum = take 1000000 (randomRs (0, 200) h)
+   --    print(10)
+--       print(rmZeros (polyMod (newRandPoly 10 10 (intgToIntList rdList) (intgToIntList rdNum)) 1000))
