@@ -22,7 +22,7 @@ import Debug.Trace
 import Control.Parallel
 import Control.Parallel.Strategies
 import Control.DeepSeq
-
+import System.Environment
 
 data MulPoly = Cons Int | Poly [MulPoly] deriving (Show)
 
@@ -289,7 +289,7 @@ algoPRES polyA polyB primeList = algoPresRec (rmZeros polyA) (rmZeros polyB) (Co
 
 
 algoPresRec polyA polyB polyC (p:primes) q f    | length primes == 0 = traceShow ("no more primes") polyD
-                                                | (maxDegree polyA 1 > maxDegree polyA' 1) || (maxDegree polyB 1 > maxDegree polyB' 1) || (cpres == False) || (2*(maxNorm polyC) > q') = 
+                                                | (maxDegree polyA 1 > maxDegree polyA' 1) || (maxDegree polyB 1 > maxDegree polyB' 1) || (cpres == False) || (2*(maxNorm polyC) > q) = 
                                                     algoPresRec polyA polyB polyC primes q' f
                                                 | otherwise = if (q > f) then polyD else algoPresRec polyA polyB polyD primes q' f
                                                 where

@@ -314,12 +314,12 @@ algoPRESPar polyA polyB primeList = applyChineseRemList (Cons 0) polyList
 
 
 
-algoPresParRec polyA polyB (p,q) = (bool, polyC', p, q)
+algoPresParRec polyA polyB (q,p) = (bool, polyC', p, q)
                               where
                                 polyA' = rmZeros (polyMod polyA p)
                                 polyB' = rmZeros (polyMod polyB p)
                                 (polyC', cpres) = algoCPRES polyA' polyB' p 2
-                                bool = (maxDegree polyA 1 == maxDegree polyA' 1) && (maxDegree polyB 1 == maxDegree polyB' 1) && cpres && (2*(maxNorm polyC') < q)
+                                bool = (maxDegree polyA 1 == maxDegree polyA' 1) && (maxDegree polyB 1 == maxDegree polyB' 1) && cpres -- && (2*(maxNorm polyC') < q)
 
 
 --listQP :: Int -> [Int] -> Int -> [(Int,Int)]
@@ -329,7 +329,7 @@ listQP q (x:xs) f | q<=f = (q,x) : (listQP (q*x) xs f)
 
 
 applyChineseRemList polyC [] = polyC
-applyChineseRemList polyC ((bool, polyC', p, q):xs) | bool == True = applyChineseRemList (polyChineseRem polyC' polyC q p) xs
+applyChineseRemList polyC ((bool, polyC', p, q):xs) | (bool == True && (2*(maxNorm polyC)<q)) = applyChineseRemList (polyChineseRem polyC' polyC q p) xs
                                                     | otherwise = applyChineseRemList polyC xs
 
 
