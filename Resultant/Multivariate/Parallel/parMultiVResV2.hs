@@ -287,7 +287,7 @@ algoPRES polyA polyB primeList = algoPresRec (rmZeros polyA) (rmZeros polyB) (Co
 
 
 algoPresRec polyA polyB polyC (p:primes) q f    | length primes == 0 = traceShow ("no more primes") polyD
-                                                | (maxDegree polyA 1 > maxDegree polyA' 1) || (maxDegree polyB 1 > maxDegree polyB' 1) || (cpres == False) || (2*(maxNorm polyC) > q') = 
+                                                | (maxDegree polyA 1 > maxDegree polyA' 1) || (maxDegree polyB 1 > maxDegree polyB' 1) || (cpres == False) || (2*(maxNorm polyC) > q) = 
                                                     algoPresRec polyA polyB polyC primes q' f
                                                 | otherwise = if (q > f) then polyD else algoPresRec polyA polyB polyD primes q' f
                                                 where
@@ -319,10 +319,10 @@ algoPresParRec polyA polyB (q,p) = (bool, polyC', p, q)
                                 polyA' = rmZeros (polyMod polyA p)
                                 polyB' = rmZeros (polyMod polyB p)
                                 (polyC', cpres) = algoCPRES polyA' polyB' p 2
-                                bool = (maxDegree polyA 1 == maxDegree polyA' 1) && (maxDegree polyB 1 == maxDegree polyB' 1) && cpres -- && (2*(maxNorm polyC') < q)
+                                bool = (maxDegree polyA 1 == maxDegree polyA' 1) && (maxDegree polyB 1 == maxDegree polyB' 1) && cpres
 
 
---listQP :: Int -> [Int] -> Int -> [(Int,Int)]
+listQP :: Int -> [Int] -> Int -> [(Int,Int)]
 listQP q [] f = []
 listQP q (x:xs) f | q<=f = (q,x) : (listQP (q*x) xs f)
                   | otherwise = if (q==1) then (q,x) : (listQP (q*x) xs f) else [(q,x)]
