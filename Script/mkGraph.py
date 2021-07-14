@@ -14,7 +14,7 @@ def Profile():
      --arg3  third argument
      -t  create the runtime graph
      -p  create the productivity graph
-     -r  (sequential only): range over values for sumEuler
+     -m  compute the mean over several executions
      -c  maximum number of cores
      -s  step when incrementing over the number of cores
      -n  custom suffix for the name of the output graph
@@ -26,7 +26,7 @@ def Profile():
     argu3 = ""
     ret_time = False
     ret_prod = False
-    range_value = False
+    mean_value = 1
     cores = ""
     core_step = ""
     name = ""
@@ -34,7 +34,7 @@ def Profile():
     argv = sys.argv[1:]
 
     try:
-        opts, args = getopt.getopt(argv, "tprc:s:n:", [
+        opts, args = getopt.getopt(argv, "tpc:s:n:m:", [
             'arg1=', 'arg2=', 'arg3=', 'path='])
         for opt, arg in opts:
             if opt == '--path':
@@ -49,8 +49,8 @@ def Profile():
                 ret_time = True
             elif opt == '-p':
                 ret_prod = True
-            elif opt == '-r':
-                range_value = True
+            elif opt == '-m':
+                mean_value = int(arg)
             elif opt == '-c':
                 cores = arg
             elif opt == '-s':
@@ -67,7 +67,8 @@ def Profile():
 
     table_time = {}
     table_prod = {}
-
+    
+    """
     if range_value:
         for maxTotient in range (int(argu2), int(argu1)+1, int(argu2)):
             t1=time.time()
@@ -79,23 +80,34 @@ def Profile():
             prod = re.findall("[0-9]+.[0-9]+",strOut[0])[0]
             table_time[str(maxTotient)] = ("%.2f" % tot_time)
             table_prod[str(maxTotient)] = prod
+    """
 
-    elif len(core_step)>0 and len(cores)>0:
+        
+    if len(core_step)>0 and len(cores)>0:
+        for m in range (1,mean_value+1):           
+            for nbCores in range (1,int(cores)+1,int(core_step)):
+                ncores = "-N"+str(nbCores)
+                t1=time.time()
+                if len(argu3)>0:
+                    out = subprocess.check_output([path_exe, argu1, argu2, argu3, "+RTS", ncores, "-s"],
+                    stderr=subprocess.STDOUT)
+                else:
+                    out = subprocess.check_output([path_exe, argu1, argu2, "+RTS", ncores, "-s"],
+                    stderr=subprocess.STDOUT)
+                t2 = time.time()
+                tot_time = t2 - t1
+                strOut = re.findall("Productivity\s+[0-9]+\.[0-9]+%",out.decode('ascii'))
+                prod = re.findall("[0-9]+.[0-9]+",strOut[0])[0]
+                if (nbCores in table_time):
+                    table_time[nbCores] += float("%.2f" % tot_time)
+                    table_prod[nbCores] += float(prod)
+                else:
+                    table_time[nbCores] = float("%.2f" % tot_time)
+                    table_prod[nbCores] = float(prod)
+                    
         for nbCores in range (1,int(cores)+1,int(core_step)):
-            ncores = "-N"+str(nbCores)
-            t1=time.time()
-            if len(argu3)>0:
-                out = subprocess.check_output([path_exe, argu1, argu2, argu3, "+RTS", ncores, "-s"],
-                    stderr=subprocess.STDOUT)
-            else:
-                out = subprocess.check_output([path_exe, argu1, argu2, "+RTS", ncores, "-s"],
-                    stderr=subprocess.STDOUT)
-            t2 = time.time()
-            tot_time = t2 - t1
-            strOut = re.findall("Productivity\s+[0-9]+\.[0-9]+%",out.decode('ascii'))
-            prod = re.findall("[0-9]+.[0-9]+",strOut[0])[0]
-            table_time[str(nbCores)] = ("%.2f" % tot_time)
-            table_prod[str(nbCores)] = prod
+            table_time[nbCores] /= mean_value
+            table_prod[nbCores] /= mean_value
 
     else :
         t1=time.time()
@@ -120,7 +132,7 @@ def Profile():
 def plotG(dictio, name, title, ylabel):
     f = open("perf"+str(name)+".txt", "w")
     for key, value in dictio.items():
-        f.write(key + " " + value + "\n")
+        f.write(str(key) + " " + str(value) + "\n")
     f.close()
 
     f = open("gnuCmd.gnu", "w")
