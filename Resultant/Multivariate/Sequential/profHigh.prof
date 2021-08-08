@@ -1,0 +1,322 @@
+	Sun Aug  8 11:29 2021 Time and Allocation Profiling Report  (Final)
+
+	   profHigh +RTS -pT -hC -RTS 1 5
+
+	total time  =      125.26 secs   (125259 ticks @ 1000 us, 1 processor)
+	total alloc = 45,290,322,536 bytes  (excludes profiling overheads)
+
+COST CENTRE   MODULE  %time %alloc
+
+polyAddrec.z  Main     19.7   12.2
+polyMult      Main     17.6    8.9
+resultant     Main     11.0    8.4
+euclideRec.r' Main      9.9    6.6
+divMonom      Main      7.1    2.4
+polyMod       Main      5.4   11.6
+multPolyM     Main      4.3    8.8
+addPolyM      Main      4.1    5.6
+polyAddrec    Main      2.3    4.6
+evalRec       Main      2.2    3.1
+rmZeros       Main      2.1    2.4
+divPoly       Main      1.6    3.7
+rmZeros.p'    Main      1.6    6.6
+addp          Main      1.2    1.4
+addPolyMRec   Main      1.1    3.8
+onlyCons      Main      1.1    2.4
+evalVariable  Main      0.8    1.8
+rmLastZeros   Main      0.6    1.7
+
+
+                                                                            individual     inherited
+COST CENTRE                       MODULE                  no.     entries  %time %alloc   %time %alloc
+
+MAIN                              MAIN                     49           0    0.0    0.0   100.0  100.0
+ main                             Main                     99           0    0.0    0.0    99.8   99.6
+  showsPrec                       Main                    376       59638    0.0    0.1     0.0    0.1
+  main.poly2                      Main                    164           1    0.0    0.0     0.0    0.0
+  main.poly1                      Main                    150           1    0.0    0.0     0.0    0.0
+  algoPRES                        Main                    100           1    0.0    0.0    99.7   99.5
+   algoPRES.e                     Main                    260           1    0.0    0.0     0.0    0.0
+    maxNorm                       Main                    261           1    0.0    0.0     0.0    0.0
+     polyNorm                     Main                    262         352    0.0    0.0     0.0    0.0
+   algoPRES.d                     Main                    257           1    0.0    0.0     0.0    0.0
+    maxNorm                       Main                    258           1    0.0    0.0     0.0    0.0
+     polyNorm                     Main                    259         273    0.0    0.0     0.0    0.0
+   algoPRES.f                     Main                    256           1    0.0    0.0     0.0    0.0
+   algoPRES.n                     Main                    254           1    0.0    0.0     0.0    0.0
+    maxDegree                     Main                    255           1    0.0    0.0     0.0    0.0
+   algoPRES.m                     Main                    252           1    0.0    0.0     0.0    0.0
+    maxDegree                     Main                    253           1    0.0    0.0     0.0    0.0
+   rmZeros                        Main                    149         320    0.0    0.0     0.0    0.0
+    rmLastZeros                   Main                    156          74    0.0    0.0     0.0    0.0
+    zerosOnly                     Main                    155         130    0.0    0.0     0.0    0.0
+    rmZeros.p'                    Main                    154          72    0.0    0.0     0.0    0.0
+   algoPresRec                    Main                    101           4    0.0    0.0    99.7   99.5
+    algoPresRec.q'                Main                    374           3    0.0    0.0     0.0    0.0
+    algoPresRec.polyC'            Main                    265           3    0.0    0.0     0.0    0.0
+    algoPresRec.polyD             Main                    263           3    0.0    0.0     0.1    0.1
+     polyChineseRem               Main                    264      238303    0.0    0.1     0.1    0.1
+      elems                       Main                    375      119148    0.0    0.0     0.0    0.0
+      chineseRem                  Main                    369      116291    0.0    0.0     0.0    0.0
+       chineseRem.q'              Main                    373      116291    0.0    0.0     0.0    0.0
+       chineseRem.b'              Main                    372      116291    0.0    0.0     0.0    0.0
+       chineseRem.d               Main                    371      116291    0.0    0.0     0.0    0.0
+       chineseRem.d'              Main                    370      116291    0.0    0.0     0.0    0.0
+    maxNorm                       Main                    251           4    0.0    0.0     0.0    0.0
+     polyNorm                     Main                    368      357611    0.0    0.0     0.0    0.0
+    algoPresRec.(...)             Main                    175           4    0.0    0.0    99.6   99.4
+     algoCPRES                    Main                    176      178924    0.5    0.4    99.6   99.4
+      resultant                   Main                    306     1571724   11.0    8.4    70.4   44.9
+       resultant.p                Main                    326      698544    0.0    0.0     0.0    0.0
+       resultant.an               Main                    325      873180    0.0    0.0     0.0    0.0
+       resultant.r                Main                    309      698544    0.0    0.0    59.1   36.5
+        remainder                 Main                    310      698544    0.2    0.0    59.1   36.5
+         euclideRec               Main                    311     2090340    0.5    0.1    58.9   36.5
+          euclideRec.r'           Main                    314     1391796    9.9    6.6    51.2   34.0
+           addp                   Main                    320     1391796    0.5    0.7    13.6   11.1
+            polyAddrec            Main                    321     6953688    1.1    2.8    13.1   10.4
+             polyAddrec.z         Main                    323     5561892   11.7    7.6    11.7    7.6
+             rmEmptyCoef          Main                    322     2788884    0.3    0.0     0.3    0.0
+           multp                  Main                    315     1391796    0.1    0.2    27.7   16.3
+            polyMult              Main                    316     3482136   17.6    8.9    27.6   16.1
+             addp                 Main                    317     2090340    0.7    0.7    10.0    7.2
+              polyAddrec          Main                    318     5927040    1.2    1.8     9.3    6.4
+               polyAddrec.z       Main                    324     3836700    8.0    4.6     8.0    4.6
+               rmEmptyCoef        Main                    319     2090340    0.2    0.0     0.2    0.0
+          euclideRec.c            Main                    312     1391796    0.0    0.0     7.2    2.4
+           divMonom               Main                    313     1391796    7.1    2.4     7.1    2.4
+       resultant.m                Main                    308     1571724    0.1    0.0     0.1    0.0
+       resultant.n                Main                    307     1571724    0.1    0.1     0.1    0.1
+      algoCPRES.univB             Main                    276      174636    0.0    0.0     1.0    1.6
+       multiToUniV                Main                    277      174636    0.0    0.0     1.0    1.6
+        multiToUniV.l             Main                    288      174636    0.0    0.0     0.0    0.0
+        multiToUniV.(...)         Main                    279      174636    0.0    0.0     0.9    1.6
+         isUnivariate             Main                    280      174636    0.0    0.0     0.9    1.6
+          onlyCons                Main                    281     4365900    0.6    1.4     0.9    1.6
+           onlyCons.pl            Main                    291     1571724    0.0    0.0     0.0    0.0
+           onlyCons.l             Main                    290     1047816    0.0    0.0     0.0    0.0
+           onlyCons.l             Main                    289     1571724    0.0    0.0     0.0    0.0
+           onlyCons.(...)         Main                    287     1571724    0.1    0.1     0.1    0.1
+           onlyCons.b             Main                    286     1571724    0.0    0.0     0.0    0.0
+           onlyCons.(...)         Main                    285     1047816    0.1    0.1     0.1    0.1
+           onlyCons.b             Main                    284     1047816    0.0    0.0     0.0    0.0
+           onlyCons.(...)         Main                    283     1571724    0.1    0.1     0.1    0.1
+           onlyCons.pb            Main                    282     1571724    0.0    0.0     0.0    0.0
+        multiToUniV.b             Main                    278      174636    0.0    0.0     0.0    0.0
+      algoCPRES.nr                Main                    240      178924    0.0    0.0     0.0    0.0
+       maxDegree                  Main                    241      178924    0.0    0.0     0.0    0.0
+      algoCPRES.k                 Main                    239        4288    0.0    0.0     0.0    0.0
+      algoCPRES.nr_1              Main                    236        4288    0.0    0.0     0.0    0.0
+       maxDegree                  Main                    237       55342    0.0    0.0     0.0    0.0
+        maxDegree.\               Main                    238       51054    0.0    0.0     0.0    0.0
+      algoCPRES.mr_1              Main                    233        4288    0.0    0.0     0.0    0.0
+       maxDegree                  Main                    234       50802    0.0    0.0     0.0    0.0
+        maxDegree.\               Main                    235       46514    0.0    0.0     0.0    0.0
+      algoCpresRec                Main                    189      178966    0.2    0.1    26.8   51.0
+       algoCpresRec.polyG         Main                    292      178920    0.0    0.0    18.7   35.0
+        interpolate               Main                    293      178920    0.1    0.0    18.7   35.0
+         interpolate.evalDb       Main                    327      178920    0.3    0.1     1.6    2.0
+          multiToUniV             Main                    329      178920    0.0    0.0     0.2    0.1
+           multiToUniV.l          Main                    348      174633    0.0    0.0     0.0    0.0
+           multiToUniV.(...)      Main                    340      174633    0.0    0.0     0.2    0.1
+            isUnivariate          Main                    341      694254    0.1    0.1     0.1    0.1
+             isUnivariate.l       Main                    349      174633    0.0    0.0     0.0    0.0
+             isUnivariate.(...)   Main                    346      174633    0.0    0.0     0.0    0.0
+              onlyCons            Main                    347      174633    0.0    0.0     0.0    0.0
+             isUnivariate.b       Main                    345      174633    0.0    0.0     0.0    0.0
+           multiToUniV.b          Main                    339      174633    0.0    0.0     0.0    0.0
+          evalVariable            Main                    328      698541    0.1    0.2     1.1    1.7
+           evalRec                Main                    343     3998415    0.7    0.9     1.0    1.5
+            addPolyM              Main                    344     3823782    0.2    0.5     0.2    0.5
+           evalVariable.\         Main                    342      519621    0.0    0.0     0.0    0.0
+         divPoly                  Main                    305    11165709    1.6    3.7     1.8    3.7
+          divPoly.\               Main                    338    10986789    0.1    0.0     0.1    0.0
+         multPoly                 Main                    301      178920    0.0    0.0     6.0   11.6
+          rmZeros                 Main                    304    11677011    0.6    0.7     1.3    3.5
+           rmLastZeros            Main                    334     1364700    0.1    0.6     0.1    0.6
+           zerosOnly              Main                    331     1027997    0.0    0.0     0.0    0.0
+           rmZeros.p'             Main                    330      853398    0.5    2.2     0.5    2.2
+          polyMod                 Main                    303    11677011    1.8    3.9     2.0    3.9
+           polyMod.\              Main                    332    11498091    0.2    0.0     0.2    0.0
+          multPolyM               Main                    302    11405424    1.8    3.5     2.8    4.2
+           addPolyM               Main                    356     2032866    0.2    0.1     0.2    0.1
+           multPolyMRec           Main                    355     1355244    0.1    0.2     0.6    0.6
+            multPolyMAux          Main                    357     1258035    0.2    0.2     0.5    0.4
+             addPolyM             Main                    360     1737207    0.3    0.1     0.3    0.1
+             multPolyMAux.ps      Main                    359      580413    0.0    0.0     0.1    0.1
+              elems               Main                    361      580413    0.0    0.0     0.0    0.0
+             multPolyMAux.multip2 Main                    358      580413    0.0    0.0     0.0    0.0
+           multPolyM.\            Main                    333    10406376    0.1    0.0     0.1    0.0
+         addPoly                  Main                    297      357840    0.1    0.0     5.9   11.6
+          rmZeros                 Main                    300    12543439    0.8    0.8     1.6    3.8
+           rmLastZeros            Main                    350     1610231    0.2    0.6     0.2    0.6
+           zerosOnly              Main                    336     1564372    0.0    0.0     0.0    0.0
+           rmZeros.p'             Main                    335     1543878    0.6    2.4     0.6    2.4
+          polyMod                 Main                    299    12543439    2.1    4.1     2.2    4.1
+           polyMod.\              Main                    337    12185599    0.1    0.0     0.1    0.0
+          addPolyM                Main                    298    11764819    1.4    1.8     2.0    3.7
+           addPolyM.p3            Main                    362      328617    0.0    0.0     0.6    1.9
+            addPolyMRec           Main                    363    10201048    0.6    1.9     0.6    1.9
+         interpolate.polyA'       Main                    294      178920    0.0    0.0     3.3    6.0
+          multPolyM               Main                    296     1200290    0.2    0.4     0.2    0.4
+           multPolyM.\            Main                    351     1021370    0.0    0.0     0.0    0.0
+          evalVariable            Main                    295      686067    0.1    0.2     3.1    5.7
+           evalRec                Main                    353     3760913    0.7    0.9     2.9    5.4
+            multPolyM             Main                    364     6229406    1.1    2.1     1.2    2.1
+             multPolyM.\          Main                    365     6160556    0.1    0.0     0.1    0.0
+            addPolyM              Main                    354     9411401    0.8    1.3     1.1    2.4
+             addPolyM.p3          Main                    366      139251    0.0    0.0     0.3    1.1
+              addPolyMRec         Main                    367     5816808    0.3    1.1     0.3    1.1
+           evalVariable.\         Main                    352      507147    0.0    0.0     0.0    0.0
+       algoCpresRec.polyC'        Main                    266      178920    0.0    0.0     0.0    0.0
+       algoCpresRec.polyD'        Main                    221      178962    0.0    0.0     3.6    8.0
+        multPoly                  Main                    223      178962    0.0    0.0     3.6    7.8
+         rmZeros                  Main                    226     5067740    0.2    0.3     0.6    1.6
+          rmLastZeros             Main                    232     1231016    0.1    0.2     0.1    0.2
+          zerosOnly               Main                    228      890148    0.0    0.0     0.0    0.0
+          rmZeros.p'              Main                    227      711354    0.2    1.0     0.2    1.0
+         polyMod                  Main                    225     5067740    0.6    1.7     0.7    1.7
+          polyMod.\               Main                    229     4888778    0.0    0.0     0.0    0.0
+         multPolyM                Main                    224     8555188    1.1    2.6     2.3    4.6
+          addPolyM                Main                    243     5911156    0.5    0.7     0.7    1.4
+           addPolyM.p3            Main                    249      174674    0.0    0.0     0.2    0.7
+            addPolyMRec           Main                    250     3824684    0.2    0.7     0.2    0.7
+          multPolyMRec            Main                    242     1563346    0.1    0.2     0.4    0.6
+           multPolyMAux           Main                    244     1388672    0.1    0.2     0.4    0.3
+            addPolyM              Main                    247     1558986    0.2    0.1     0.2    0.1
+            multPolyMAux.ps       Main                    246      519662    0.0    0.0     0.1    0.1
+             elems                Main                    248      519662    0.0    0.0     0.0    0.0
+            multPolyMAux.multip2  Main                    245      519662    0.0    0.0     0.0    0.0
+          multPolyM.\             Main                    230     7502928    0.1    0.0     0.1    0.0
+        monomial                  Main                    222      711354    0.0    0.1     0.0    0.1
+       algoCpresRec.polyB'        Main                    206      178962    0.0    0.0     2.2    4.2
+        rmZeros                   Main                    209     2936934    0.3    0.3     0.5    1.0
+         rmLastZeros              Main                    220     1790754    0.1    0.1     0.1    0.1
+         zerosOnly                Main                    211     1791888    0.0    0.0     0.0    0.0
+         rmZeros.p'               Main                    210     1791006    0.2    0.5     0.2    0.5
+        polyMod                   Main                    208     2936934    0.5    1.0     0.5    1.0
+         polyMod.\                Main                    212     2757972    0.0    0.0     0.0    0.0
+        evalVariable              Main                    207     2312856    0.3    0.7     1.1    2.3
+         evalRec                  Main                    214     3744762    0.4    0.8     0.7    1.4
+          addPolyM                Main                    216     3488058    0.2    0.5     0.3    0.5
+           addPolyM.p3            Main                    217       50526    0.0    0.0     0.0    0.0
+            addPolyMRec           Main                    218      267624    0.0    0.0     0.0    0.0
+          multPolyM               Main                    215      417606    0.1    0.1     0.1    0.1
+           multPolyM.\            Main                    219      353640    0.0    0.0     0.0    0.0
+         evalVariable.\           Main                    213     2133894    0.1    0.2     0.1    0.2
+       algoCpresRec.polyA'        Main                    191      178966    0.0    0.0     1.9    3.7
+        rmZeros                   Main                    194     2719846    0.2    0.3     0.5    0.9
+         rmLastZeros              Main                    203     1773882    0.1    0.1     0.1    0.1
+         zerosOnly                Main                    196     2133480    0.0    0.0     0.0    0.0
+         rmZeros.p'               Main                    195     1774398    0.1    0.5     0.1    0.5
+        polyMod                   Main                    193     2719846    0.4    0.9     0.4    0.9
+         polyMod.\                Main                    197     2540880    0.0    0.0     0.0    0.0
+        evalVariable              Main                    192     2123460    0.3    0.7     1.0    1.9
+         evalRec                  Main                    199     3007306    0.4    0.6     0.7    1.0
+          addPolyM                Main                    201     2613086    0.2    0.4     0.2    0.4
+           addPolyM.p3            Main                    204       30534    0.0    0.0     0.0    0.0
+            addPolyMRec           Main                    205      125202    0.0    0.0     0.0    0.0
+          multPolyM               Main                    200      232396    0.0    0.1     0.0    0.1
+           multPolyM.\            Main                    202      189352    0.0    0.0     0.0    0.0
+         evalVariable.\           Main                    198     1944494    0.1    0.1     0.1    0.1
+       maxDegree                  Main                    190     1427210    0.1    0.1     0.2    0.1
+        maxDegree.\               Main                    231      532392    0.0    0.0     0.0    0.0
+      algoCPRES.mr                Main                    187      178924    0.0    0.0     0.0    0.0
+       maxDegree                  Main                    188      178924    0.0    0.0     0.0    0.0
+      algoCPRES.univA             Main                    177      178924    0.0    0.0     0.9    1.4
+       multiToUniV                Main                    178      178924    0.0    0.0     0.9    1.4
+        multiToUniV.l             Main                    271      174636    0.0    0.0     0.0    0.0
+        multiToUniV.(...)         Main                    180      178924    0.0    0.0     0.9    1.4
+         isUnivariate             Main                    181      178924    0.1    0.2     0.9    1.4
+          isUnivariate.l          Main                    272      174636    0.0    0.0     0.0    0.0
+          isUnivariate.(...)      Main                    183      178924    0.0    0.0     0.8    1.2
+           onlyCons               Main                    184     4001894    0.5    1.0     0.8    1.2
+            onlyCons.pl           Main                    275     1555848    0.0    0.0     0.0    0.0
+            onlyCons.l            Main                    274     1555848    0.0    0.0     0.0    0.0
+            onlyCons.l            Main                    273      698544    0.0    0.0     0.0    0.0
+            onlyCons.(...)        Main                    270     1555848    0.1    0.1     0.1    0.1
+            onlyCons.b            Main                    269     1555848    0.0    0.0     0.0    0.0
+            onlyCons.(...)        Main                    268     1564290    0.1    0.1     0.1    0.1
+            onlyCons.pb           Main                    267     1564290    0.0    0.0     0.0    0.0
+            onlyCons.(...)        Main                    186      702832    0.0    0.0     0.0    0.0
+            onlyCons.b            Main                    185      702832    0.0    0.0     0.0    0.0
+          isUnivariate.b          Main                    182      178924    0.0    0.0     0.0    0.0
+        multiToUniV.b             Main                    179      178924    0.0    0.0     0.0    0.0
+    algoPresRec.cpres             Main                    174           4    0.0    0.0     0.0    0.0
+    algoPresRec.polyB'            Main                    167           4    0.0    0.0     0.0    0.0
+     rmZeros                      Main                    169         615    0.0    0.0     0.0    0.0
+      rmLastZeros                 Main                    173         129    0.0    0.0     0.0    0.0
+      zerosOnly                   Main                    171         227    0.0    0.0     0.0    0.0
+      rmZeros.p'                  Main                    170         141    0.0    0.0     0.0    0.0
+     polyMod                      Main                    168         615    0.0    0.0     0.0    0.0
+      polyMod.\                   Main                    172         611    0.0    0.0     0.0    0.0
+    algoPresRec.polyA'            Main                    157           4    0.0    0.0     0.0    0.0
+     rmZeros                      Main                    159         476    0.0    0.0     0.0    0.0
+      rmLastZeros                 Main                    163         120    0.0    0.0     0.0    0.0
+      zerosOnly                   Main                    161         249    0.0    0.0     0.0    0.0
+      rmZeros.p'                  Main                    160         131    0.0    0.0     0.0    0.0
+     polyMod                      Main                    158         476    0.0    0.0     0.0    0.0
+      polyMod.\                   Main                    162         472    0.0    0.0     0.0    0.0
+    maxDegree                     Main                    148          16    0.0    0.0     0.0    0.0
+ CAF                              Main                     97           0    0.0    0.0     0.2    0.4
+  polyChineseRem                  Main                    379           0    0.0    0.0     0.0    0.0
+   chineseRem                     Main                    380           0    0.0    0.0     0.0    0.0
+    chineseRem.b'                 Main                    381           0    0.0    0.0     0.0    0.0
+  showList                        Main                    378           1    0.0    0.0     0.0    0.0
+  showsPrec                       Main                    377           0    0.0    0.0     0.0    0.0
+  randPoly5                       Main                    166           1    0.0    0.0     0.0    0.0
+  randPoly1                       Main                    153           1    0.0    0.0     0.0    0.0
+  randPolyList                    Main                    152           1    0.0    0.0     0.0    0.0
+  primesTMWE                      Main                    120           1    0.0    0.0     0.1    0.3
+   _Y                             Main                    121           5    0.0    0.0     0.1    0.3
+    gapsW                         Main                    125      229458    0.0    0.0     0.0    0.0
+    joinT                         Main                    124          17    0.0    0.0     0.1    0.2
+     union                        Main                    128      670138    0.0    0.1     0.0    0.1
+     joinT.pairs                  Main                    126         529    0.0    0.0     0.0    0.1
+      union                       Main                    127      643441    0.0    0.1     0.0    0.1
+    hitsW                         Main                    123         880    0.0    0.0     0.0    0.1
+     hitsW.\                      Main                    129      216625    0.0    0.0     0.0    0.0
+  wheel                           Main                    114           1    0.0    0.0     0.0    0.0
+  wheelNums                       Main                    113           1    0.0    0.0     0.0    0.0
+  highPrimes                      Main                    102           1    0.0    0.0     0.1    0.1
+   primesFromTMWE                 Main                    103           1    0.0    0.0     0.1    0.1
+    primesFromTMWE.t              Main                    143           1    0.0    0.0     0.0    0.0
+    primesFromTMWE.p2             Main                    141           1    0.0    0.0     0.0    0.0
+    primesFromTMWE.z              Main                    122           1    0.0    0.0     0.0    0.0
+    primesFromTMWE.(...)          Main                    119           1    0.0    0.0     0.0    0.0
+    primesFromTMWE.h              Main                    118           1    0.0    0.0     0.0    0.0
+    gapsW                         Main                    115         661    0.0    0.0     0.0    0.0
+    primesFromTMWE.(...)          Main                    107           1    0.0    0.0     0.0    0.0
+     rollFrom                     Main                    110           1    0.0    0.0     0.0    0.0
+      rollFrom.go                 Main                    112          43    0.0    0.0     0.0    0.0
+     rollFrom.m                   Main                    109           1    0.0    0.0     0.0    0.0
+     snapUp                       Main                    108           1    0.0    0.0     0.0    0.0
+    primesFromTMWE.a              Main                    106           1    0.0    0.0     0.0    0.0
+    primesFromTMWE.compositesFrom Main                    105           1    0.0    0.0     0.1    0.1
+     multsOf                      Main                    133       78497    0.0    0.0     0.1    0.0
+      multsOf.\                   Main                    147        1166    0.0    0.0     0.0    0.0
+      multsOf.wh                  Main                    146         632    0.0    0.0     0.0    0.0
+      multsOf.(...)               Main                    135       78497    0.0    0.0     0.1    0.0
+       rollFrom                   Main                    138       78497    0.1    0.0     0.1    0.0
+        rollFrom.go               Main                    140     2052399    0.0    0.0     0.0    0.0
+       rollFrom.m                 Main                    137       78497    0.0    0.0     0.0    0.0
+       snapUp                     Main                    136       78497    0.0    0.0     0.0    0.0
+      multsOf.x                   Main                    134       78497    0.0    0.0     0.0    0.0
+     joinST                       Main                    117          18    0.0    0.0     0.0    0.0
+      union                       Main                    131        5298    0.0    0.0     0.0    0.0
+      joinST.pairs                Main                    130       78495    0.0    0.0     0.0    0.0
+       union                      Main                    132       85934    0.0    0.0     0.0    0.0
+     joinT                        Main                    116           2    0.0    0.0     0.0    0.0
+      union                       Main                    145         561    0.0    0.0     0.0    0.0
+      joinT.pairs                 Main                    142           1    0.0    0.0     0.0    0.0
+       union                      Main                    144           1    0.0    0.0     0.0    0.0
+    primesFromTMWE.wh2            Main                    104           1    0.0    0.0     0.0    0.0
+  main                            Main                     98           1    0.0    0.0     0.0    0.0
+   main.poly2                     Main                    165           0    0.0    0.0     0.0    0.0
+   main.poly1                     Main                    151           0    0.0    0.0     0.0    0.0
+ CAF                              GHC.IO.Handle.FD         93           0    0.0    0.0     0.0    0.0
+ CAF                              GHC.Conc.Signal          89           0    0.0    0.0     0.0    0.0
+ CAF                              GHC.IO.Encoding          86           0    0.0    0.0     0.0    0.0
+ CAF                              Debug.Trace              78           0    0.0    0.0     0.0    0.0
+ CAF                              Text.Read.Lex            75           0    0.0    0.0     0.0    0.0
+ CAF                              GHC.IO.Encoding.Iconv    74           0    0.0    0.0     0.0    0.0
