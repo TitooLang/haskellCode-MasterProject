@@ -18,6 +18,7 @@ def Profile():
      -c  maximum number of cores
      -s  step when incrementing over the number of cores
      -n  custom suffix for the name of the output graph
+     -r  create the memory residency graph
     """
 
     path_exe = ""
@@ -26,6 +27,7 @@ def Profile():
     argu3 = ""
     ret_time = False
     ret_prod = False
+    ret_residency = False
     mean_value = 1
     cores = ""
     core_step = ""
@@ -34,7 +36,7 @@ def Profile():
     argv = sys.argv[1:]
 
     try:
-        opts, args = getopt.getopt(argv, "tpc:s:n:m:", [
+        opts, args = getopt.getopt(argv, "rtpc:s:n:m:", [
             'arg1=', 'arg2=', 'arg3=', 'path='])
         for opt, arg in opts:
             if opt == '--path':
@@ -45,6 +47,8 @@ def Profile():
                 argu2 = arg
             elif opt == '--arg3':
                 argu3 = arg
+            elif opt == '-r':
+                ret_residency = True
             elif opt == '-t':
                 ret_time = True
             elif opt == '-p':
@@ -67,6 +71,7 @@ def Profile():
 
     table_time = {}
     table_prod = {}
+    table_residency = {}
     
     """
     if range_value:
@@ -98,16 +103,21 @@ def Profile():
                 tot_time = t2 - t1
                 strOut = re.findall("Productivity\s+[0-9]+\.[0-9]+%",out.decode('ascii'))
                 prod = re.findall("[0-9]+.[0-9]+",strOut[0])[0]
+                residency = re.findall("[0-9]+\s+MB\stotal",out.decode('ascii'))
+                resi = re.findall("[0-9]+",residency[0])[0]
                 if (nbCores in table_time):
                     table_time[nbCores] += float("%.2f" % tot_time)
                     table_prod[nbCores] += float(prod)
+                    table_residency[nbCores] += float(resi)
                 else:
                     table_time[nbCores] = float("%.2f" % tot_time)
                     table_prod[nbCores] = float(prod)
+                    table_residency[nbCores] = float(resi)
                     
         for nbCores in range (1,int(cores)+1,int(core_step)):
             table_time[nbCores] /= mean_value
             table_prod[nbCores] /= mean_value
+            table_residency[nbCores] /= mean_value
 
     else :
         t1=time.time()
@@ -125,6 +135,9 @@ def Profile():
 
     if ret_time and len(table_time)>0:
         plotG(table_time,"runtime"+str(name), "Runtime Graph", "Time(s)")
+        
+    if ret_residency and len(table_residency)>0:
+        plotG(table_residency,"memory"+str(name), "Memory Graph", "Memory(MB)")
 
 
 
