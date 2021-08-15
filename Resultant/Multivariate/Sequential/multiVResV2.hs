@@ -1,5 +1,5 @@
 {- 
- <Parallel implementation of multivariate polynomial resultant thanks to an algorithm 
+ <Sequential implementation of multivariate polynomial resultant thanks to an algorithm 
  using the Chineses remainder theorem, interpolation and evaluation homomorphism 
  to reduce the problem over GF(p). 
  Source: G.E. COLLINS, "The Calculation of Multivariate Polynomial Resultants", 1971.>
